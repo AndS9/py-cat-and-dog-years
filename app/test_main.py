@@ -24,7 +24,7 @@ def test_get_human_age(cat_age: int, dog_age: int,
 
 def test_that_input_value_is_valid_type() -> None:
     with pytest.raises(TypeError):
-        get_human_age('a', 15)
+        get_human_age("a", 15)
 
 
 def test_that_input_values_is_valid_values() -> None:
