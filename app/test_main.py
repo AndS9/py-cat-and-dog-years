@@ -1,4 +1,5 @@
 import pytest
+from typing import Any
 from app.main import get_human_age
 
 
@@ -22,11 +23,24 @@ def test_get_human_age(cat_age: int, dog_age: int,
     assert get_human_age(cat_age, dog_age) == expected
 
 
-def test_that_input_value_is_valid_type() -> None:
+@pytest.mark.parametrize("cat_age,dog_age", [
+    ("a", 0),
+    ([10, 4], 2),
+    ({"a": 10, "b": 4}, 2),
+    (10, 4.2),
+    (5, (5, 10)),
+    (None, None)
+])
+def test_that_input_value_is_valid_type(cat_age: Any, dog_age: Any) -> None:
     with pytest.raises(TypeError):
-        get_human_age("a", 15)
+        get_human_age(cat_age, dog_age)
 
 
-def test_that_input_values_is_valid_values() -> None:
+@pytest.mark.parametrize("cat_age,dog_age", [
+    (-5, 10),
+    (-4, -1),
+    (3, -5),
+])
+def test_that_input_values_is_valid_values(cat_age: Any, dog_age: Any) -> None:
     with pytest.raises(ValueError):
-        get_human_age(-10, -5)
+        get_human_age(cat_age, dog_age)
